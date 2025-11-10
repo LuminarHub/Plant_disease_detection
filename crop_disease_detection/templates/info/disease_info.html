@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}AI Crop Disease Info{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-green-50 flex flex-col items-center pt-12">
+  <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-3xl border border-green-100">
+    <h1 class="text-3xl font-bold text-green-800 text-center mb-6">
+      🌿 Crop Disease Information (AI Powered)
+    </h1>
+
+    <form method="get" class="flex mb-6">
+      <input
+        type="text"
+        name="q"
+        value="{{ query }}"
+        placeholder="Enter disease or crop name (e.g., Tomato Blight, Apple Rust)..."
+        class="flex-grow border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring focus:ring-green-300"
+      />
+      <button
+        type="submit"
+        class="bg-green-700 text-white px-5 rounded-r hover:bg-green-800 transition"
+      >
+        Search
+      </button>
+    </form>
+
+    {% if structured_output %}
+      <div class="space-y-4 text-gray-800">
+        <h2 class="text-2xl font-semibold text-green-700 mb-2">🧠 AI Generated Information</h2>
+        {% if structured_output.Crop %}
+          <div>
+            <h3 class="text-lg font-semibold text-green-700">🌾 Crop:</h3>
+            <p>{{ structured_output.Crop }}</p>
+          </div>
+        {% endif %}
+        {% if structured_output.Symptoms %}
+          <div>
+            <h3 class="text-lg font-semibold text-green-700">⚠️ Symptoms:</h3>
+            <p class="whitespace-pre-line">{{ structured_output.Symptoms }}</p>
+          </div>
+        {% endif %}
+        {% if structured_output.Prevention %}
+          <div>
+            <h3 class="text-lg font-semibold text-green-700">🛡️ Prevention:</h3>
+            <p class="whitespace-pre-line">{{ structured_output.Prevention }}</p>
+          </div>
+        {% endif %}
+        {% if structured_output.Treatment %}
+          <div>
+            <h3 class="text-lg font-semibold text-green-700">💊 Treatment:</h3>
+            <p class="whitespace-pre-line">{{ structured_output.Treatment }}</p>
+          </div>
+        {% endif %}
+      </div>
+
+    {% elif ai_response %}
+      <div class="mt-8 bg-green-50 border border-green-200 rounded-lg p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-green-700 mb-2">🧠 AI Generated Response</h2>
+        <p class="text-gray-700 whitespace-pre-line">{{ ai_response }}</p>
+      </div>
+
+    {% elif query %}
+      <p class="text-gray-500 text-center">⚠️ No data returned or error fetching AI info.</p>
+    {% else %}
+      <p class="text-gray-500 text-center italic">
+        Enter a disease or crop name to get AI-generated agricultural insights 🌾
+      </p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

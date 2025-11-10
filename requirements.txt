@@ -1,0 +1,33 @@
+# Django Framework
+Django==5.0.6
+
+# Machine Learning / Deep Learning
+tensorflow==2.16.1
+numpy==1.26.4
+
+# Image Handling
+Pillow==10.3.0
+
+# HTTP Requests (for weather API, chatbot integrations)
+requests==2.32.3
+
+# Data handling and report generation
+pandas==2.2.2
+reportlab==4.2.0
+
+# Authentication and security utilities
+python-dotenv==1.0.1
+
+# Optional chatbot/NLP (you can skip if rule-based only)
+nltk==3.9.1
+
+# For CORS (if you later expose APIs)
+django-cors-headers==4.4.0
+
+# Static and media file support (if deployed)
+whitenoise==6.6.0
+
+# Optional visualization (for admin charts or analysis)
+matplotlib==3.9.0
+
+groq

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Crop Chatbot{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-start pt-10 bg-[#E9F7F2] min-h-screen">
+  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-2xl border border-green-100">
+    <h2 class="text-3xl font-bold text-green-800 mb-4 text-center">
+      🌾 Crop Disease Chatbot
+    </h2>
+
+    <div id="chat-box" class="h-80 overflow-y-auto border border-gray-200 p-4 rounded bg-gray-50 mb-4">
+      <p class="text-gray-500 text-sm text-center italic">
+        Ask me about crop diseases, prevention, or care tips 🌿
+      </p>
+    </div>
+
+    <form id="chat-form" class="flex">
+      {% csrf_token %}
+      <input id="user-input" type="text" name="message"
+        placeholder="Type your question..."
+        class="flex-grow border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring focus:ring-green-300">
+      <button type="submit"
+        class="bg-green-700 text-white px-5 rounded-r hover:bg-green-800 transition">
+        Send
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+const form = document.getElementById("chat-form");
+const input = document.getElementById("user-input");
+const chatBox = document.getElementById("chat-box");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const message = input.value.trim();
+  if (!message) return;
+
+  chatBox.innerHTML += `<p><b>You:</b> ${message}</p>`;
+  input.value = "";
+
+  try {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const res = await fetch("{% url 'chatbot' %}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken,
+      },
+      body: JSON.stringify({ message }),
+    });
+
+    const data = await res.json();
+    chatBox.innerHTML += `<p class="text-green-700"><b>Bot:</b> ${data.response}</p>`;
+  } catch (err) {
+    console.error(err);
+    chatBox.innerHTML += `<p class="text-red-600"><b>Bot:</b> ⚠️ Error connecting to chatbot.</p>`;
+  }
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+});
+</script>
+{% endblock %}

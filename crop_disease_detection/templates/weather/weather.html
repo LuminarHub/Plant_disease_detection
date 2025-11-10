@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Weather Information{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
+  <h1 class="text-3xl font-bold text-green-700 text-center mb-6">🌦️ Weather Information</h1>
+
+  <!-- Search Form -->
+  <form method="get" class="flex space-x-2 mb-6">
+    <input type="text" name="city" value="{{ city }}" placeholder="Enter city name..."
+           class="flex-grow border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+      Search
+    </button>
+  </form>
+
+  {% if error %}
+  <div class="bg-red-100 text-red-700 border border-red-400 p-3 rounded mb-4">
+    {{ error }}
+  </div>
+  {% endif %}
+
+  {% if weather_data %}
+  <div class="text-center space-y-3">
+    <h2 class="text-2xl font-semibold text-green-700">{{ weather_data.city }}, {{ weather_data.country }}</h2>
+    <img src="https://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" alt="Weather Icon" class="mx-auto w-20 h-20">
+    <p class="text-gray-800 text-lg">{{ weather_data.description }}</p>
+    <p class="text-3xl font-bold text-green-700">{{ weather_data.temperature }}°C</p>
+
+    <div class="grid grid-cols-3 gap-4 text-sm text-gray-700 mt-4">
+      <div class="bg-gray-50 border rounded-lg p-3">
+        <p class="font-semibold">💧 Humidity</p>
+        <p>{{ weather_data.humidity }}%</p>
+      </div>
+      <div class="bg-gray-50 border rounded-lg p-3">
+        <p class="font-semibold">🔽 Pressure</p>
+        <p>{{ weather_data.pressure }} hPa</p>
+      </div>
+      <div class="bg-gray-50 border rounded-lg p-3">
+        <p class="font-semibold">🌡️ Feels Like</p>
+        <p>{{ weather_data.temperature }}°C</p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

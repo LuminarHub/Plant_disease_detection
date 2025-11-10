@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Crop Disease Detection System{% endblock %}</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-green-50 min-h-screen flex flex-col">
+
+  <!-- 🌿 Navbar -->
+  <nav class="bg-green-700 text-white shadow-md">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+      <div class="flex items-center space-x-2">
+        <img src="{% static 'images/logo.png' %}" onerror="this.style.display='none'" alt="Logo" class="h-8 w-8 mr-2">
+        <a href="{% url 'home' %}" class="font-semibold text-xl tracking-wide hover:text-green-200">
+          Crop Disease Detection
+        </a>
+      </div>
+
+      <!-- Right-side Navigation -->
+      <div class="flex space-x-6 text-sm">
+        <a href="{% url 'home' %}" class="hover:text-green-200">Home</a>
+        <a href="{% url 'chatbot' %}" class="hover:text-green-200">Chatbot</a>
+        <a href="{% url 'weather' %}" class="hover:text-green-200">Weather</a>
+        <a href="{% url 'disease_info' %}" class="hover:text-green-200">Info</a>
+
+        {% if user.is_authenticated %}
+          <span class="text-green-200 font-semibold">Hi, {{ user.username }}!</span>
+          <a href="{% url 'logout' %}" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white">Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- 🌾 Page Content -->
+  <main class="flex-grow container mx-auto py-8 px-6">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- 🌱 Footer -->
+  <footer class="bg-green-700 text-white text-center py-3 mt-6">
+    <p class="text-sm">&copy; 2025 Crop Disease Detection System | Powered by Django</p>
+  </footer>
+
+</body>
+</html>

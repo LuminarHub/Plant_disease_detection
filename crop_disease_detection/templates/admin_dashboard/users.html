@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}User Management{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold text-green-700 mb-6 text-center">User Management</h1>
+
+<div class="bg-white shadow-md rounded-lg p-6">
+  <table class="min-w-full border-collapse border border-gray-300 text-sm">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="p-2 border border-gray-300 text-left">Username</th>
+        <th class="p-2 border border-gray-300 text-left">Email</th>
+        <th class="p-2 border border-gray-300 text-center">Role</th>
+        <th class="p-2 border border-gray-300 text-center">Active</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr class="hover:bg-green-50">
+        <td class="p-2 border border-gray-300">{{ user.username }}</td>
+        <td class="p-2 border border-gray-300">{{ user.email }}</td>
+        <td class="p-2 border border-gray-300 text-center">
+          {% if user.is_admin %}
+          <span class="text-purple-600 font-medium">Admin</span>
+          {% elif user.is_farmer %}
+          <span class="text-green-600 font-medium">Farmer</span>
+          {% else %}
+          <span class="text-gray-600">User</span>
+          {% endif %}
+        </td>
+        <td class="p-2 border border-gray-300 text-center">
+          {% if user.is_active %}
+          <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">Active</span>
+          {% else %}
+          <span class="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs">Inactive</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4" class="text-center p-3 text-gray-500">No users found</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

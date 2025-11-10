@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8 text-center mt-10">
+  <h1 class="text-4xl font-bold text-green-700 mb-4">🌾 Crop Disease Detection System</h1>
+  <p class="text-gray-600 mb-6">
+    Welcome to the Crop Disease Detection Portal. Upload crop images for disease prediction
+    and view your prediction history for better monitoring.
+  </p>
+
+  <div class="flex justify-center flex-wrap gap-6">
+    <!-- ✅ Prediction -->
+    <a href="{% url 'prediction' %}" 
+       class="bg-green-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-green-700 transition">
+      Prediction
+    </a>
+
+    <!-- ✅ History -->
+    <a href="{% url 'history' %}" 
+       class="bg-gray-700 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-800 transition">
+      History
+    </a>
+
+    <!-- ✅ Feedback -->
+    <a href="{% url 'feedback_page' %}" 
+       class="bg-gray-700 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-800 transition">
+      Feedback
+    </a>
+
+    <!-- ✅ Admin Dashboard (Visible only to admin/superuser) -->
+    {% if user.is_authenticated %}
+      {% if user.is_admin or user.is_superuser %}
+      <a href="{% url 'admin_dashboard' %}" 
+         class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition">
+        Dashboard
+      </a>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
