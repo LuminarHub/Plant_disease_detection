@@ -1,4 +1,5 @@
 import requests
+import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -17,8 +18,22 @@ def chatbot_view(request):
 def chatbot_api(request):
     """Handles AJAX chat requests."""
     if request.method == 'POST':
-        user_message = request.POST.get('message', '')
-        if not user_message.strip():
+        # Try to read message from JSON or form-data
+        user_message = ""
+
+        try:
+            if request.content_type and "application/json" in request.content_type:
+                # JSON body
+                body = json.loads(request.body.decode('utf-8'))
+                user_message = body.get('message', '')
+            else:
+                # Form data
+                user_message = request.POST.get('message', '')
+        except Exception as e:
+            print("Error parsing request body:", e)
+            return JsonResponse({'response': "⚠️ Error reading your message."})
+
+        if not user_message or not user_message.strip():
             return JsonResponse({'response': "Please enter a message."})
 
         try:
@@ -31,7 +46,7 @@ def chatbot_api(request):
             }
 
             payload = {
-                "model": "mixtral-8x7b-32768",
+                "model": "llama-3.3-70b-versatile",
                 "messages": [
                     {"role": "system", "content": "You are an intelligent crop disease assistant chatbot."},
                     {"role": "user", "content": user_message}

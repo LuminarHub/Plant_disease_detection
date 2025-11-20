@@ -5,17 +5,77 @@
   <meta charset="UTF-8">
   <title>Register | Crop Disease Detection System</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    /* Make all input boxes clear and visible */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db; /* gray-300 */
+      border-radius: 0.5rem;      /* rounded-lg */
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #16a34a;      /* green-600 */
+      box-shadow: 0 0 0 2px rgba(22,163,74,0.2);
+    }
+
+    /* Hide Django password help text + rule list */
+    .helptext {
+      display: none !important;
+    }
+
+    form ul {
+      display: none !important;
+    }
+
+    /* Space between label, field, and errors */
+    form p {
+      margin-bottom: 0.75rem;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      color: #374151; /* gray-700 */
+      font-weight: 500;
+    }
+
+    .errorlist {
+      color: #dc2626; /* red-600 */
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+    }
+  </style>
 </head>
 <body class="bg-green-50 flex items-center justify-center h-screen">
-  <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-    <h1 class="text-2xl font-bold text-center text-green-700 mb-6">Create Account</h1>
-    <form method="post" class="space-y-4">
+  <div class="bg-white p-8 rounded-2xl shadow-lg w-96 border border-green-100">
+    <h1 class="text-2xl font-bold text-center text-green-700 mb-6">
+      Create Account
+    </h1>
+
+    <form method="post" class="space-y-3">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit" class="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700">Register</button>
+
+      <button type="submit"
+        class="w-full py-2.5 mt-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition">
+        Register
+      </button>
     </form>
-    <p class="text-center mt-4 text-sm">Already registered? 
-      <a href="{% url 'login' %}" class="text-green-600 hover:underline">Login</a>
+
+    <p class="text-center mt-4 text-sm text-gray-600">
+      Already registered?
+      <a href="{% url 'login' %}" class="text-green-600 font-medium hover:underline">
+        Login
+      </a>
     </p>
   </div>
 </body>

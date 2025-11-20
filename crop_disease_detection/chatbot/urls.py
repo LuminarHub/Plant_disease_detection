@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import chatbot_view
+from .views import chatbot_view, chatbot_api
 
 urlpatterns = [
-    path('', chatbot_view, name='chatbot'),  # Single endpoint handles both GET (UI) and POST (chat)
+    path('', chatbot_view, name='chatbot'),
+    path('api/', chatbot_api, name='chatbot_api'),
 ]
